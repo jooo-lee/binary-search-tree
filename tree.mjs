@@ -35,6 +35,31 @@ class Tree {
 
         return root;
     }
+
+    // Will console.log the tree in a structured format
+    print() {
+        const prettyPrint = (node, prefix = '', isLeft = true) => {
+            if (node === null) {
+                return;
+            }
+            if (node.right !== null) {
+                prettyPrint(
+                    node.right,
+                    `${prefix}${isLeft ? '│   ' : '    '}`,
+                    false
+                );
+            }
+            console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.data}`);
+            if (node.left !== null) {
+                prettyPrint(
+                    node.left,
+                    `${prefix}${isLeft ? '    ' : '│   '}`,
+                    true
+                );
+            }
+        };
+        prettyPrint(this.root);
+    }
 }
 
 export default Tree;
