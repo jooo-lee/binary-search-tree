@@ -3,14 +3,14 @@ import Node from './node.mjs';
 class Tree {
     constructor(array) {
         this.root = this.buildTree(
-            this.removeDuplicatesAndSort(array),
+            this.#removeDuplicatesAndSort(array),
             0,
             array.length - 1
         );
     }
 
     // Removes duplicates and sorts numbers in ascending order
-    removeDuplicatesAndSort(array) {
+    #removeDuplicatesAndSort(array) {
         return [...new Set(array)].toSorted((a, b) => a - b);
     }
 
