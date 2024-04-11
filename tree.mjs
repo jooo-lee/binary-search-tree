@@ -36,48 +36,64 @@ class Tree {
         return root;
     }
 
+    // Helper function for the insert method
+    #recursiveInsert(root, value) {
+        // Tree is empty and/or we have found the place of insertion for value
+        if (!root) {
+            return new Node(value);
+        }
+
+        if (value < root.data) {
+            root.left = recursiveInsert(root.left, value);
+        } else if (value > root.data) {
+            root.right = recursiveInsert(root.right, value);
+        }
+        return root;
+    }
+
     // Inserts value into the binary search tree
     insert(value) {
-        const recursiveInsert = (root, value) => {
-            // Tree is empty and/or we have found the place of insertion for value
-            if (!root) {
-                return new Node(value);
-            }
+        this.root = this.#recursiveInsert(this.root, value);
+    }
 
-            if (value < root.data) {
-                root.left = recursiveInsert(root.left, value);
-            } else if (value > root.data) {
-                root.right = recursiveInsert(root.right, value);
-            }
-            return root;
-        };
-        this.root = recursiveInsert(this.root, value);
+    // Helper function for the print method
+    #prettyPrint(node, prefix = '', isLeft = true) {
+        if (node === null) {
+            return;
+        }
+        if (node.right !== null) {
+            prettyPrint(
+                node.right,
+                `${prefix}${isLeft ? '│   ' : '    '}`,
+                false
+            );
+        }
+        console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.data}`);
+        if (node.left !== null) {
+            prettyPrint(
+                node.left,
+                `${prefix}${isLeft ? '    ' : '│   '}`,
+                true
+            );
+        }
     }
 
     // Will console.log the tree in a structured format
     print() {
-        const prettyPrint = (node, prefix = '', isLeft = true) => {
-            if (node === null) {
-                return;
-            }
-            if (node.right !== null) {
-                prettyPrint(
-                    node.right,
-                    `${prefix}${isLeft ? '│   ' : '    '}`,
-                    false
-                );
-            }
-            console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.data}`);
-            if (node.left !== null) {
-                prettyPrint(
-                    node.left,
-                    `${prefix}${isLeft ? '    ' : '│   '}`,
-                    true
-                );
-            }
-        };
-        prettyPrint(this.root);
+        this.#prettyPrint(this.root);
     }
 }
+
+// const arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
+const arr = [];
+const myTree = new Tree(arr);
+myTree.insert(3);
+myTree.insert(0);
+myTree.insert(4);
+myTree.insert(8);
+myTree.insert(1);
+myTree.insert(100);
+myTree.insert(69);
+myTree.print();
 
 export default Tree;
