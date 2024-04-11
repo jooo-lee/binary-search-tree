@@ -36,6 +36,24 @@ class Tree {
         return root;
     }
 
+    // Inserts value into the binary search tree
+    insert(value) {
+        const recursiveInsert = (root, value) => {
+            // Tree is empty and/or we have found the place of insertion for value
+            if (!root) {
+                return new Node(value);
+            }
+
+            if (value < root.data) {
+                root.left = recursiveInsert(root.left, value);
+            } else if (value > root.data) {
+                root.right = recursiveInsert(root.right, value);
+            }
+            return root;
+        };
+        this.root = recursiveInsert(this.root, value);
+    }
+
     // Will console.log the tree in a structured format
     print() {
         const prettyPrint = (node, prefix = '', isLeft = true) => {
