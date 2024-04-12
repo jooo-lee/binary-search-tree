@@ -60,6 +60,39 @@ class Tree {
         this.root = this.#recursiveInsert(this.root, value);
     }
 
+    // Helper function for the deleteItem method
+    #recursiveDelete(root, value) {
+        if (!root) return null;
+        if (value > root.data) {
+            root.right = this.#recursiveDelete(root.right, value);
+        } else if (value < root.data) {
+            root.left = this.#recursiveDelete(root.left, value);
+        } else {
+            // Here, root refers to the node that is to be deleted
+
+            // Handle cases where node to be deleted has no children or one child
+            if (!root.left) return root.right;
+            else if (!root.right) return root.left;
+
+            /**
+             * Node to be deleted has two children, we can replace it either with
+             * the node with the largest value in the node to be deleted's left
+             * subtree or with the node with the smallest value in the node to be
+             * deleted's right subtree. We will use the latter.
+             */
+            let rightSmallest = root.right;
+            while (rightSmallest.left) rightSmallest = rightSmallest.left;
+            rightSmallest.left = root.left;
+            return root.right;
+        }
+        return root;
+    }
+
+    // Deletes the given value from the tree
+    deleteItem(value) {
+        this.root = this.#recursiveDelete(this.root, value);
+    }
+
     // Helper function for the print method
     #prettyPrint(node, prefix = '', isLeft = true) {
         if (node === null) {
