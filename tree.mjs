@@ -1,11 +1,15 @@
 import Node from './node.mjs';
 
+// Assume integers as node values
 class Tree {
+    #processedArray;
+
     constructor(array) {
+        this.#processedArray = this.#removeDuplicatesAndSort(array);
         this.root = this.buildTree(
-            this.#removeDuplicatesAndSort(array),
+            this.#processedArray,
             0,
-            array.length - 1
+            this.#processedArray.length - 1
         );
     }
 
@@ -83,17 +87,5 @@ class Tree {
         this.#prettyPrint(this.root);
     }
 }
-
-// const arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
-const arr = [];
-const myTree = new Tree(arr);
-myTree.insert(3);
-myTree.insert(0);
-myTree.insert(4);
-myTree.insert(8);
-myTree.insert(1);
-myTree.insert(100);
-myTree.insert(69);
-myTree.print();
 
 export default Tree;
