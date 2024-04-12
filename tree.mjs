@@ -44,9 +44,9 @@ class Tree {
         }
 
         if (value < root.data) {
-            root.left = recursiveInsert(root.left, value);
+            root.left = this.#recursiveInsert(root.left, value);
         } else if (value > root.data) {
-            root.right = recursiveInsert(root.right, value);
+            root.right = this.#recursiveInsert(root.right, value);
         }
         return root;
     }
@@ -62,7 +62,7 @@ class Tree {
             return;
         }
         if (node.right !== null) {
-            prettyPrint(
+            this.#prettyPrint(
                 node.right,
                 `${prefix}${isLeft ? '│   ' : '    '}`,
                 false
@@ -70,7 +70,7 @@ class Tree {
         }
         console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.data}`);
         if (node.left !== null) {
-            prettyPrint(
+            this.#prettyPrint(
                 node.left,
                 `${prefix}${isLeft ? '    ' : '│   '}`,
                 true
