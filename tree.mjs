@@ -170,6 +170,28 @@ class Tree {
         dfsOrder.forEach((node) => callback(node));
     }
 
+    // Helper function for the postOrder method
+    #postOrderHelper(array, root) {
+        if (!root) return;
+        this.#postOrderHelper(array, root.left);
+        this.#postOrderHelper(array, root.right);
+        array.push(root);
+    }
+
+    /**
+     * Accepts an optional callback as an argument. Traverses the tree using
+     * postorder traversal and yields each node to the provided callback. Returns
+     * an array of values if no callback is given as an argument. Simply returns
+     * if the tree is empty.
+     */
+    postOrder(callback) {
+        if (!this.root) return;
+        const dfsOrder = [];
+        this.#postOrderHelper(dfsOrder, this.root);
+        if (!callback) return dfsOrder.map((node) => node.data);
+        dfsOrder.forEach((node) => callback(node));
+    }
+
     // Helper function for the print method
     #prettyPrint(node, prefix = '', isLeft = true) {
         if (node === null) {
