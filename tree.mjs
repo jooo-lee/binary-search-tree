@@ -107,6 +107,25 @@ class Tree {
         }
     }
 
+    /**
+     * Iteratively traverses the tree in breadth-first level order and provides
+     * each node as an argument to the callback. Returns an array of values if
+     * no callback is given as an argument. Simply returns if the tree is empty.
+     */
+    levelOrder(callback) {
+        if (!this.root) return;
+        const bfsOrder = [];
+        const queue = [this.root];
+        while (queue.length !== 0) {
+            const currentNode = queue.shift();
+            bfsOrder.push(currentNode);
+            if (currentNode.left) queue.push(currentNode.left);
+            if (currentNode.right) queue.push(currentNode.right);
+        }
+        if (!callback) return bfsOrder.map((node) => node.data);
+        bfsOrder.forEach((node) => callback(node));
+    }
+
     // Helper function for the print method
     #prettyPrint(node, prefix = '', isLeft = true) {
         if (node === null) {
@@ -134,9 +153,5 @@ class Tree {
         this.#prettyPrint(this.root);
     }
 }
-
-const arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
-const myTree = new Tree(arr);
-myTree.print();
 
 export default Tree;
