@@ -126,6 +126,28 @@ class Tree {
         bfsOrder.forEach((node) => callback(node));
     }
 
+    // Helper function for the inOrder method
+    #inOrderHelper(array, root) {
+        if (!root) return;
+        this.#inOrderHelper(array, root.left);
+        array.push(root);
+        this.#inOrderHelper(array, root.right);
+    }
+
+    /**
+     * Accepts an optional callback as an argument. Traverses the tree using
+     * inorder traversal and yields each node to the provided callback. Returns
+     * an array of values if no callback is given as an argument. Simply returns
+     * if the tree is empty.
+     */
+    inOrder(callback) {
+        if (!this.root) return;
+        const dfsOrder = [];
+        this.#inOrderHelper(dfsOrder, this.root);
+        if (!callback) return dfsOrder.map((node) => node.data);
+        dfsOrder.forEach((node) => callback(node));
+    }
+
     // Helper function for the print method
     #prettyPrint(node, prefix = '', isLeft = true) {
         if (node === null) {
