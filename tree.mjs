@@ -204,6 +204,26 @@ class Tree {
         );
     }
 
+    // Helper function for the depth method
+    #depthHelper(root, node) {
+        console.log(root.data, node.data);
+        if (root.data === node.data) return 0;
+        else if (node.data < root.data) {
+            return this.#depthHelper(root.left, node) + 1;
+        } else if (node.data > root.data) {
+            return this.#depthHelper(root.right, node) + 1;
+        }
+    }
+
+    /**
+     * Returns the given node's depth, with depth being defined as the number
+     * of edges in the path from a given node to the tree's root node.
+     */
+    depth(node) {
+        if (!this.root) return;
+        return this.#depthHelper(this.root, node);
+    }
+
     // Helper function for the print method
     #prettyPrint(node, prefix = '', isLeft = true) {
         if (node === null) {
