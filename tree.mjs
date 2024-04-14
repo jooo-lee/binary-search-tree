@@ -93,6 +93,20 @@ class Tree {
         this.root = this.#recursiveDelete(this.root, value);
     }
 
+    // Returns the node with the given value
+    find(value) {
+        let tmp = this.root;
+        while (tmp) {
+            if (value > tmp.data) {
+                tmp = tmp.right;
+            } else if (value < tmp.data) {
+                tmp = tmp.left;
+            } else {
+                return tmp;
+            }
+        }
+    }
+
     // Helper function for the print method
     #prettyPrint(node, prefix = '', isLeft = true) {
         if (node === null) {
@@ -120,5 +134,9 @@ class Tree {
         this.#prettyPrint(this.root);
     }
 }
+
+const arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
+const myTree = new Tree(arr);
+myTree.print();
 
 export default Tree;
