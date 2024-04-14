@@ -192,6 +192,18 @@ class Tree {
         dfsOrder.forEach((node) => callback(node));
     }
 
+    /**
+     * Returns the given node's height, with height being defined as the number
+     * of edges in the longest path from a given node to a leaf node.
+     */
+    height(node) {
+        if (!node || (!node.left && !node.right)) return 0;
+        return Math.max(
+            this.height(node.left) + 1,
+            this.height(node.right) + 1
+        );
+    }
+
     // Helper function for the print method
     #prettyPrint(node, prefix = '', isLeft = true) {
         if (node === null) {
