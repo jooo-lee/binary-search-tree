@@ -247,6 +247,12 @@ class Tree {
         return this.#isBalancedHelper(this.root)[0];
     }
 
+    // Rebalances an unbalanced tree
+    rebalance() {
+        const nodesInOrder = this.inOrder();
+        this.root = this.buildTree(nodesInOrder, 0, nodesInOrder.length - 1);
+    }
+
     // Helper function for the print method
     #prettyPrint(node, prefix = '', isLeft = true) {
         if (node === null) {
