@@ -224,6 +224,29 @@ class Tree {
         return this.#depthHelper(this.root, node);
     }
 
+    /**
+     * Helper function for the isBalanced method. Returns an array with two
+     * values - whether or not the tree is balanced at the given root and
+     * what the height at the given root is.
+     */
+    #isBalancedHelper(root) {
+        if (!root) return [true, 0];
+        const left = this.#isBalancedHelper(root.left);
+        const right = this.#isBalancedHelper(root.right);
+        const balanced =
+            left[0] && right[0] && Math.abs(left[1] - right[1]) <= 1;
+        return [balanced, 1 + Math.max(left[1], right[1])];
+    }
+
+    /**
+     * Checks if the tree is balanced, where a balanced tree is one where the
+     * difference between heights of the left subtree and the right subtree of
+     * every node is not more than 1.
+     */
+    isBalanced() {
+        return this.#isBalancedHelper(this.root)[0];
+    }
+
     // Helper function for the print method
     #prettyPrint(node, prefix = '', isLeft = true) {
         if (node === null) {
